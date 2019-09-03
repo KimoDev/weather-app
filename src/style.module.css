@@ -1,0 +1,188 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    color: white;
+    text-align: center;
+}
+
+.header {
+    height: 7vh;
+    color: white;
+}
+
+.mainWrapper {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.WeatherDetailsWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-top: 70px;
+    height: auto;
+    width: 60vw;
+}
+
+.searchBar {
+    margin-top: 40px;
+}
+
+.searchInput {
+    background: none;
+    border: none;
+    border-bottom: solid 1px #ffffff;
+    color: #ffffff;
+    text-align: center;
+}
+
+.searchInput::placeholder {
+    color: white;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchInput:focus::placeholder{
+    color:transparent;
+}
+
+.activeScale {
+    color: #508ed9;
+}
+
+.notActiveScale {
+    cursor: pointer;
+}
+
+.test{
+    height: 100vh;
+    width: 100vw;
+    background: url('./Assets/cloudsBg.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.cardListWrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0px;
+}
+
+
+
+.weatherTitle {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+
+.weatherContent {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.row {
+    text-align: center;
+}
+
+.row:nth-child(1) {
+
+}
+.row:nth-child(2) {
+    margin-top: 4px;
+}
+
+
+.date {
+    margin-right: 10px;
+}
+
+.dayType {
+    margin-left: 10px;
+}
+
+.iconHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tempDetails h1 {
+    font-size: 84px;
+}
+
+.tempSwitchWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    
+}
+.tempDetails {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-self: center;
+}
+
+.tempBtn {
+    font-size: 16px;
+}
+
+.seperator {
+    margin: 0px 5px;
+}
+
+.temperatureLabel {
+    margin: 0px 5px 0px 0px ;
+}
+
+.tempSwitch {
+
+}
+
+.extraText {
+
+}
+
+.cards {
+    border: solid 1px rgba(255, 255, 255, 0.25);
+    margin: 0.75em;
+    padding: 0 10px;
+}
+
+.cards:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
