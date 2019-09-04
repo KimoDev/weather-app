@@ -2,12 +2,13 @@ import React from 'react';
 import '../style.css';
 
 import styles from '../style.module.css';
+import '../style.css';
 import SVG from './SVG'
 
 
 
 const Card = (props) => (
-    <div className={styles.cards} >
+    <div className={styles.cards} onClick={props.onClick(props)}>
         <div className={styles.cardContent}>
             <div>{props.day}</div>
             <div> 
@@ -15,6 +16,7 @@ const Card = (props) => (
             </div>
             <div>
                 {props.tempHigh}º {props.tempLow}º 
+                
             </div>
         </div>
      </div>

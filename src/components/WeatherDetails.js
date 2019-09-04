@@ -7,24 +7,32 @@ import SVG from './SVG'
 const WeatherDetails = (props) => {
     const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     
+        
+    
+    
     return (
 
         <div className={styles.WeatherDetailsWrapper}>
             <div className={styles.weatherTitle}>
                 <div className={styles.row}>
-                <span className={styles.date}>{week[new Date().getDay()]} {new Date().getHours()}:00</span> 
-                <span className={styles.dayType}>{props.summary}</span>
+                <span className={styles.date}>{week[props.cardActive.id]} {new Date().getHours()}:00</span> 
+                <span className={styles.dayType}>{props.icon}</span>
                 </div>
                 <div className={styles.row}>{props.address}</div>
             </div>
             <div className={styles.weatherContent}>
                 <div className={styles.iconHolder}>
+                
                     {props.icon ? <SVG icon={props.icon} size={150} /> : null}
                 </div>
                 
                     
                     <div className={styles.tempDetails}>
-                    <h1 className={styles.temperatureLabel}>{props.temp || null}</h1>
+
+                    <h1 className={styles.temperatureLabel}>
+                        {props.temp || null}
+                    </h1>
+
                         <div className={styles.tempSwitchWrapper}>
                         <div className={`${styles.tempSwitch}`}>
                             <p className={styles.tempBtn}>
@@ -46,7 +54,11 @@ const WeatherDetails = (props) => {
                 
             </div>
             <div className={styles.cardListWrapper}>
-                <CardList days={props.days} convertToC={props.convertToC} scale={props.scale}/>
+                <CardList 
+                days={props.days}
+                convertToC={props.convertToC} 
+                scale={props.scale}
+                cardClick={props.cardClick}/>
             </div>
         </div>
 

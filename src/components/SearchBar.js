@@ -13,7 +13,9 @@ const SearchBar = (props) => {
                 onChange={props.onChange} 
                 className={styles.searchInput}   />
                 {/* <i className="search link icon" /> */}
+                <button onClick={props.onSubmit}>Search</button>
             </form>
+            
         </div>
         );
 

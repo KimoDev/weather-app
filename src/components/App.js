@@ -17,29 +17,50 @@ class App extends Component {
             location: null,
             dailyForecast: [],
             currentForecast: {},
-            isCelsiusActive: true
+            isCelsiusActive: true,
+            cardActive: {
+                id: new Date().getDay(),
+                isActive: false
+            }
         }
     }
     
      componentDidMount = () => {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.getInitalLocation, (err) => console.log(err),{timeout:10000});
+                navigator.geolocation.getCurrentPosition(this.getInitalLocation, (err) => alert(err));
             }  
+
     }
-   
+    removeClasses = (els) => {
+        for (var i = 0; i < els.length; i++) {
+          els[i].classList.remove('active')
+        }
+      }
+
     handleSubmit = async (e) => {
         e.preventDefault();
+        // remove css of card if selected when a new search is made
+        var els = document.querySelectorAll('.active')
+        this.removeClasses(els);
+        let location = null;
         
-        const location = e.currentTarget.children[0].value;
+        e.target.tagName === "BUTTON" 
+        ? location = e.target.parentElement.children[0].value
+        : location = e.currentTarget.children[0].value;
         const data = await this.getSearchedLocation(location);
         console.log(data.forecast);
         this.setState({
             location: data.address,
             currentForecast: data.forecast.currently,
-            dailyForecast: [data.forecast.daily.data.slice(0, 7)]
+            dailyForecast: [data.forecast.daily.data.slice(0, 7)],
+            cardActive: {
+                id: new Date().getDay(),
+                isActive: false
+            }
         }, () => {
             
         });
+    
     }
 
     handleChange = (e) => {
@@ -70,6 +91,23 @@ class App extends Component {
             }))
         } 
     }
+    
+    handleCardClick = p => e => {
+        var els = document.querySelectorAll('.active')
+        this.removeClasses(els);
+        e.currentTarget.classList.add("active");
+        
+        
+        this.setState({
+            cardActive: {
+                id: p.id,
+                isActive: true
+            }
+        }, () => {
+            console.log(this.state.cardActive);
+            
+        })
+    }
 
     getInitalLocation = async (position) => {
         const {latitude, longitude} = position.coords;
@@ -85,7 +123,7 @@ class App extends Component {
             currentForecast: res.data.forecast.currently,
             dailyForecast: [res.data.forecast.daily.data.slice(0, 7)]
         }), () => {
-           
+            console.log(this.state.currentForecast)
         });
 }
 
@@ -96,8 +134,8 @@ class App extends Component {
         return response.data;
     }
     
-    render() {
-        
+    render() {  
+       
         return (
             <div className={styles.test}>
                 <Header/>  
@@ -107,12 +145,20 @@ class App extends Component {
                     days={this.state.dailyForecast} 
                     tempSwitch={this.handleTemperatureSwitch} 
                     scale={this.state.isCelsiusActive}
-                    temp={this.state.isCelsiusActive ? this.convertToCelsius(this.state.currentForecast.temperature) : Math.round(this.state.currentForecast.temperature)}
+                    // probably a better way to do this logic
+                    temp={ 
+                        this.state.cardActive.isActive && this.state.isCelsiusActive ? this.convertToCelsius(this.state.dailyForecast[0][this.state.cardActive.id].temperatureHigh) 
+                        : this.state.cardActive.isActive && !this.state.isCelsiusActive ? Math.round(this.state.dailyForecast[0][this.state.cardActive.id].temperatureHigh) 
+                        : !this.state.cardActive.isActive && this.state.isCelsiusActive ? this.convertToCelsius(this.state.currentForecast.temperature)
+                        : Math.round(this.state.currentForecast.temperature)
+                    }
+                    // i'm sorry 
                     apparentTemp={this.state.isCelsiusActive ? this.convertToCelsius(this.state.currentForecast.apparentTemperature) : Math.round(this.state.currentForecast.temperature)}
-                    summary={this.state.currentForecast.summary}
                     address={this.state.location || null} 
                     convertToC={this.convertToCelsius}
-                    icon={this.state.currentForecast.icon}
+                    icon={this.state.cardActive.isActive ? this.state.dailyForecast[0][this.state.cardActive.id].icon : this.state.currentForecast.icon}
+                    cardClick={this.handleCardClick}
+                    cardActive={this.state.cardActive}
                     /> 
                     <Footer />   
                 </div>
