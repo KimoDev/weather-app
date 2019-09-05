@@ -130,7 +130,6 @@ class App extends Component {
     getSearchedLocation =  async (location) => {
         
         const response = await axios.post(`http://localhost:8080/geo`, {location});
-        
         return response.data;
     }
     
