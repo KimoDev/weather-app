@@ -4,7 +4,8 @@ const serverless = require('serverless-http');
 
 const router = express.Router();
 
-const config = require('../config');
+const DARKSKY_KEY = process.env.DARKSKY_KEY;
+const GMAP_KEY = process.env.GMAP_KEY;
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -25,8 +26,8 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const {lat, lng } = req.body.location;
-        const forecast = await axios.get(`https://api.darksky.net/forecast/${config.DARKSKY_KEY}/${lat},${lng}`);
-        const address = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${config.GMAP_KEY}`);
+        const forecast = await axios.get(`https://api.darksky.net/forecast/${DARKSKY_KEY}/${lat},${lng}`);
+        const address = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GMAP_KEY}`);
         
         return res.send({forecast: forecast.data, address: address.data}); 
     } catch (err) {
