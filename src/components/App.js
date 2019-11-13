@@ -112,7 +112,7 @@ class App extends Component {
     getInitalLocation = async (position) => {
         const {latitude, longitude} = position.coords;
 
-        const res = await axios.post(`http://localhost:8080/`, {
+        const res = await axios.post(`/.netlify/functions/server`, {
                 location : {
                     lat : latitude, 
                     lng: longitude
@@ -129,7 +129,7 @@ class App extends Component {
 
     getSearchedLocation =  async (location) => {
         
-        const response = await axios.post(`http://localhost:8080/geo`, {location});
+        const response = await axios.post(`/.netlify/functions/server/geo`, {location});
         return response.data;
     }
     

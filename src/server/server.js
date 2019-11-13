@@ -1,21 +1,28 @@
 const express = require('express');
 const app = express();
+const serverless = require('serverless-http');
+
+const router = express.Router();
+
 const config = require('../config');
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 
-
-// eslint-disable-next-line
-const PORT = 8080;
-
 app.use(cors());
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/.netlify/functions/server', router);
 
-app.post('/', async (req, res) => {
+router.get('/', (req, res) => {
+    console.log("root hit");
+    res.send({
+        "hello": "hi world"
+    })
+})
+router.post('/', async (req, res) => {
     try {
         const {lat, lng } = req.body.location;
         const forecast = await axios.get(`https://api.darksky.net/forecast/${config.DARKSKY_KEY}/${lat},${lng}`);
@@ -27,7 +34,7 @@ app.post('/', async (req, res) => {
     }
 })
 
-app.post('/geo', async (req, res) => {
+router.post('/geo', async (req, res) => {
     try {
         const inputAddress = req.body.location;
 
@@ -46,7 +53,5 @@ app.post('/geo', async (req, res) => {
 })
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports.handler = serverless(app);
 
