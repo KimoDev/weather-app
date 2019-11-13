@@ -38,14 +38,13 @@ router.post('/', async (req, res) => {
 router.post('/geo', async (req, res) => {
     try {
         const inputAddress = req.body.location;
-
-        const location = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${inputAddress}&key=${config.GMAP_KEY}`);
+        const location = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${inputAddress}&key=${GMAP_KEY}`);
         console.log(location.data);
         const {lat, lng } = location.data.results[0].geometry.location;
     
         const address = location.data.results[0].formatted_address
         
-        const forecast = await axios.get(`https://api.darksky.net/forecast/${config.DARKSKY_KEY}/${lat},${lng}`);
+        const forecast = await axios.get(`https://api.darksky.net/forecast/${DARKSKY_KEY}/${lat},${lng}`);
         return res.send({forecast: forecast.data, address});
     } catch (err) {
         console.log("err", err)
